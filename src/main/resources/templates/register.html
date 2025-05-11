@@ -76,7 +76,7 @@
             <div class="content">
                 <h2>Register</h2>
 
-            <form th:action="@{/register}" method="get" th:object="${userRegistration}">
+            <form th:action="@{/addingUser}" method="post" th:object="${user}">
 				    <label for="u_id">UserID:</label>
                     <input type="text" id="u_id" name="u_id" th:field="*{u_id}" required><br>
                     
@@ -96,7 +96,7 @@
                 </form>
 
 
-                <p th:text="${error}" style="color: red;"></p>
+
             </div>
         </div>
     </div>

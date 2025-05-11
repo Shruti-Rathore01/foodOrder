@@ -37,8 +37,10 @@ public class AdminController {
 	@PostMapping("/adminLogin")
 	public String  getAllData(  @ModelAttribute("adminLogin") AdminLogin login, Model model)
 	{
+
 		String email=login.getEmail();
 		String password=login.getPassword();
+
 		if(adminServices.validateAdminCredentials(email, password))
 		{
 			return "redirect:/admin/services";
@@ -50,27 +52,47 @@ public class AdminController {
 
 	}
 
-	@PostMapping("/userLogin")
-	public String userLogin( @ModelAttribute("userLogin") UserLogin login,Model model)
-	{
 
-		email=login.getUserEmail();
-		String password=login.getUserPassword();
-		if(services.validateLoginCredentials(email, password))
-		{
-			user = this.services.getUserByEmail(email);
-			List<Orders> orders = this.orderServices.getOrdersForUser(user);
-			model.addAttribute("orders", orders);
-			model.addAttribute("name", user.getUname());
-			return "BuyProduct";
-		}
-		else
-		{
-			model.addAttribute("error2", "Invalid email or password");
+	@PostMapping("/userLogin")
+	public String userLogin(@ModelAttribute("userLogin") UserLogin login, Model model) {
+		try {
+			String email = login.getUserEmail();
+			String password = login.getUserPassword();
+
+			if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+				model.addAttribute("error2", "Email and Password must not be empty.");
+				return "Login";
+			}
+
+			if (services.validateLoginCredentials(email, password)) {
+				user = services.getUserByEmail(email);
+
+				if (user == null) {
+					model.addAttribute("error2", "User not found.");
+					return "Login";
+				}
+
+				if (user.getUpassword() == null) {
+					model.addAttribute("error2", "Password is not set for this user.");
+					return "Login";
+				}
+
+				List<Orders> orders = orderServices.getOrdersForUser(user);
+				model.addAttribute("orders", orders);
+				model.addAttribute("name", user.getUname());
+				return "BuyProduct";
+			} else {
+				model.addAttribute("error2", "Invalid email or password.");
+				return "Login";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("error2", "An error occurred during login. Please try again.");
 			return "Login";
 		}
-
 	}
+
 	@PostMapping("/product/search")
 	public String seachHandler(@RequestParam("productName") String name,Model model)
 	{
@@ -89,12 +111,14 @@ public class AdminController {
 		model.addAttribute("product", product);
 		return "BuyProduct";
 
-	} 
+	}
 	@GetMapping("/admin/services")
-	public String returnBack(Model model)
-	{
+	public String returnBack(Model model) {
+
+
+
 		List<User> users= this.services.getAllUser();
-		List<Admin>admins=this.adminServices.getAll(); 
+		List<Admin>admins=this.adminServices.getAll();
 		List<Product>products=this.productServices.getAllProducts();
 		List<Orders> orders = this.orderServices.getOrders();
 		model.addAttribute("users",users);
@@ -104,6 +128,7 @@ public class AdminController {
 
 		return "Admin_Page";
 	}
+
 	@GetMapping("/addAdmin")
 	public String addAdminPage()
 	{

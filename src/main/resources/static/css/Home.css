@@ -1,32 +1,59 @@
 @charset "ISO-8859-1";
-body{
-	overflow: hidden;
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background-image: url('../Images/download.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-.background
-{
-	margin-top: 0px;
+
+.background {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
 }
-.background video{
-	
-	width: 100%;
-	height: 60%;
-	
-}
-.text{
-    width: 90%;
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+
+.text {
+    color: #ffffff;
     text-align: center;
+    z-index: 2;
 }
 
-.text h1{
-    font-size: 3rem;
+.text h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.text h3{
-    margin: 1rem;
-    padding: 2px;
+.text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.text .cta {
+    padding: 10px 30px;
+    background-color: #ff5a5f;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.text .cta:hover {
+    background-color: #e0494f;
 }

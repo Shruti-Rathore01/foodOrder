@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import com.example.demo.entities.Admin;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
+import org.springframework.stereotype.Service;
 
 @Component
+@Service
 public class UserServices 
 {
 	@Autowired
@@ -49,20 +51,38 @@ public class UserServices
 	{
 	this.userRepository.save(user);
 	}
-	
-	public boolean validateLoginCredentials(String email,String password)
-	{
+
+	public boolean validateLoginCredentials(String email, String password) {
 		List<User> users = (List<User>) this.userRepository.findAll();
-		for(User u:users)
-		{
-		if(u!=null && u.getUpassword().equals(password) && u.getUemail().equals(email))
-		{
-			return true;
+
+		for (User user : users) {
+			if (user != null) {
+				String dbPassword = user.getUpassword();
+				String dbEmail = user.getUemail();
+
+				if (dbEmail != null && dbEmail.equals(email)) {
+					if (dbPassword == null) {
+						System.out.println("Password is null for email: " + email);
+						return false;  // Password is null, cannot proceed with comparison
+					}
+
+					if (dbPassword.equals(password)) {
+						return true;
+					}
+				}
+			}
 		}
-		}
+
 		return false;
 	}
-	
 
 
+	public User findUserByUemail(String uemail) {
+		try {
+			return userRepository.findUserByUemail(uemail);
+		} catch (Exception e) {
+			System.out.println("Exception in findUserByUemail: " + e.getMessage());
+			return null;
+		}
+	}
 }

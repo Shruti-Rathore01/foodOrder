@@ -13,7 +13,10 @@ public class AdminServices
 {
 	@Autowired
 	private AdminRepository adminRepository;
-	
+
+	@Autowired
+	private UserRepository userRepository;
+
 
 	public List<Admin>getAll()
 	{
@@ -55,6 +58,11 @@ public class AdminServices
 		if(admin!=null && admin.getAdminPassword().equals(password))
 		{
 			return true;
+		}
+		User user = userRepository.findUserByUemail(email);
+		if (user == null) {
+			System.out.println("User not found for email: " + email);
+			return false;
 		}
 		return false;
 	}

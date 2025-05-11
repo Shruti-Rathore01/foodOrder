@@ -3,131 +3,193 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>Buy Product </title>
+	<title>Buy Product</title>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="" />
 </head>
 <style>
 	body {
-		background-image: url("https://images.pexels.com/photos/7219747/pexels-photo-7219747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-		 background-size: cover; 
+		margin: 0;
+		padding: 0;
+		font-family: 'Poppins', sans-serif;
+		background: linear-gradient(135deg, #2c3e50, #34495e);
+		color: #ecf0f1;
+		overflow-x: hidden;
 	}
 
-	* {
-		font-size: 16px;
-		font-family: sans-serif;
-	}
-
-	.searchInput {
+	.welcome {
 		margin-top: 30px;
+		text-align: center;
+		color: #ecf0f1;
+		font-size: 24px;
+		font-weight: 600;
 	}
 
-	.searchInput input {
-		padding: 15px;
-		width: 270px;
-	}
-
-	.searchInput button {
-		padding: 15px;
-		width: 100px;
-		background-color: red;
-	}
-
-	.details {
-		margin-top: 70px;
-	}
-
-	.details input,
-	.details button {
-		display: block;
-		padding: 5px;
-		font-size: 16px;
-		
-
+	.welcome marquee, .welcome span {
+		font-size: 22px;
+		color: #ecf0f1;
 	}
 
 	a {
-		border: 1px solid black;
-		background-color: darkgoldenrod;
-		color: black;
-		text-decoration: none;
-		padding: 7px;
-		width: 50px;
-		position: fixed;
-	}
-	.details th{
-		background-color: dimgray;
-		font-family: sans-serif;
-		padding: 10px;
 		border: none;
-	
+		background-color: #e74c3c;
+		color: #fff;
+		text-decoration: none;
+		padding: 10px 20px;
+		border-radius: 8px;
+		position: fixed;
+		top: 20px;
+		left: 20px;
+		font-weight: bold;
+		transition: background-color 0.3s ease;
 	}
-	td{
+
+	a:hover {
+		background-color: #c0392b;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+		gap: 30px;
+	}
+
+	.form-container {
+		background-color: #2c3e50;
+		padding: 30px;
+		border-radius: 12px;
+		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+		width: 400px;
+	}
+
+	.form-container h1 {
+		color: #e74c3c;
+		font-size: 24px;
+		margin-bottom: 15px;
+		font-weight: 600;
+	}
+
+	.form-container input, .form-container button {
+		width: 100%;
+		padding: 12px;
+		margin-bottom: 15px;
+		border-radius: 8px;
+		border: 1px solid #34495e;
+		font-size: 16px;
+		outline: none;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	.form-container input:focus {
+		border-color: #e74c3c;
+		background-color: #34495e;
+	}
+
+	.form-container button {
+		background-color: #e74c3c;
+		color: #fff;
+		border: none;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.form-container button:hover {
+		background-color: #c0392b;
+	}
+
+	.details {
+		width: 100%;
+		max-width: 800px;
+		background-color: #34495e;
+		padding: 20px;
+		border-radius: 12px;
+		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+	}
+
+	.details table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.details th, .details td {
+		padding: 12px;
 		text-align: center;
-		border-bottom: 1px solid lightslategrey;
 	}
-	.welcome marquee,.welcome span
-	{
-		
-		width: 50%;
-		font-size: 20px;
-		font-family: sans-serif;
-		color: lavender;
+
+	.details th {
+		background-color: #e74c3c;
+		color: #fff;
+		font-weight: 600;
 	}
-	
+
+	.details td {
+		background-color: #2c3e50;
+		color: #ecf0f1;
+	}
+
+	.details tr:nth-child(even) td {
+		background-color: #34495e;
+	}
+
+	.details tr:hover td {
+		background-color: #7f8c8d;
+	}
 </style>
 
 <body>
-	<div class="welcome">
-			<marquee direction="right"  behaviour="slide" 
-			scrollamount="15" loop="1">Welcome Back <span  th:text="${name}"></span>
-			</marquee><br />
-	</div>
-	
-	<a href="/login">Back</a>
-	<center>
 
-		<form action="" th:action="@{/product/search}" method="post" class="searchInput">
-			<h1>Product Search :</h1>
-			<input type="text" name="productName" required placeholder="Please enter the Product Name....">
-			<button type="submit">SEARCH</button><br />
-			<smal style="color: red;" th:text="${message}"> </smal>
+<div class="welcome">
+	<marquee direction="right" behaviour="slide" scrollamount="15" loop="1">
+		Welcome Back, <span th:text="${name}"></span>
+	</marquee>
+</div>
+
+<a href="/login">Back</a>
+
+<div class="container">
+	<div class="form-container">
+		<h1>Product Search</h1>
+		<form action="" th:action="@{/product/search}" method="post">
+			<input type="text" name="productName" required placeholder="Enter the Product Name...">
+			<button type="submit">SEARCH</button>
+			<small style="color: red;" th:text="${message}"></small>
 		</form>
-		
-		<div th:if="${product!=null}" class="details">
-			<form action="" th:action="@{/product/order}" th:object="${product}" method="post">
-				ProductName :
-				<input type="text" value="" name="oName" th:value="${product.pname}" readonly /><br />
-				Product Price :
-				<input type="text" value="" name="oPrice" th:value="${product.pprice}" readonly /><br />
-				Quqntity :
-				<input type="number" placeholder="Minimun: 1KG" min="1" name="oQuantity" /><br />
+	</div>
 
-				<button type="submit">Order_Now</button>
-			</form>
-		</div>
-		
-		<div th:if="${orders!=null}" class="details">
-			<h2>Your Orders :</h2>
-			<table >
-				<tr>
-	
-					<th>Product_Name</th>
-					<th>Product_Price</th>
-					<th>Product_Quantity</th>
-					<th>Total_Ammount</th>
-					<th>Date</th>
-				</tr>
-				<tr th:each="order :${orders}">
-					<td th:text="${order.oName}"></td>
-					<td th:text="${order.oPrice}"></td>
-					<td th:text="${order.oQuantity}"></td>
-					<td th:text="${order.totalAmmout}"></td>
-					<td th:text="${order.orderDate}"></td>
+	<div th:if="${product!=null}" class="form-container">
+		<h1>Order Product</h1>
+		<form action="" th:action="@{/product/order}" th:object="${product}" method="post">
+			<input type="text" name="oName" th:value="${product.pname}" readonly />
+			<input type="text" name="oPrice" th:value="${product.pprice}" readonly />
+			<input type="number" placeholder="Minimum: 1KG" min="1" name="oQuantity" />
+			<button type="submit">Order Now</button>
+		</form>
+	</div>
 
-				</tr>
-			</table>
-		</div>
-	</center>
+	<div th:if="${orders!=null}" class="details">
+		<h2>Your Orders</h2>
+		<table>
+			<tr>
+				<th>Product Name</th>
+				<th>Product Price</th>
+				<th>Quantity</th>
+				<th>Total Amount</th>
+				<th>Date</th>
+			</tr>
+			<tr th:each="order :${orders}">
+				<td th:text="${order.oName}"></td>
+				<td th:text="${order.oPrice}"></td>
+				<td th:text="${order.oQuantity}"></td>
+				<td th:text="${order.totalAmmout}"></td>
+				<td th:text="${order.orderDate}"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
 </body>
 
 </html>

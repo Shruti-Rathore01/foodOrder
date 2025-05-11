@@ -5,7 +5,8 @@
 	<meta charset="UTF-8" />
 	<title>ADMIN PAGE :</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-	<link rel="stylesheet" href="" th:href="@{/css/Admin_page.css}" />
+	<link rel="stylesheet" th:href="@{/css/Admin_Page.css}" />
+
 
 </head>
 
@@ -99,16 +100,16 @@
 					<th>Total_Ammount</th>
 					<th>Date</th>
 				</tr>
-				<tr th:each="order :${orders}">
-					<td th:text="${order.user.uname}"></td>
-					<td th:text="${order.user.uemail}"></td>
+				<tr th:each="order : ${orders}">
+					<td th:text="${order.user != null ? order.user.uname : 'No Name'}"></td>
+					<td th:text="${order.user != null ? order.user.uemail : 'No Email'}"></td>
 					<td th:text="${order.oName}"></td>
 					<td th:text="${order.oPrice}"></td>
 					<td th:text="${order.oQuantity}"></td>
 					<td th:text="${order.totalAmmout}"></td>
 					<td th:text="${order.orderDate}"></td>
-
 				</tr>
+
 			</table>
 		</div>
 		</section>
